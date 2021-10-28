@@ -107,7 +107,7 @@ class MyFirstTabStateKeeper extends State<LoginPage> {
               context: context,
               onPressed: () {},
               color: Colors.white,
-              assetImage: ConstanceData.faceDetectionIcon,
+              assetImage: ConstanceData.faceLockIcon,
             ),
             SizedBox(width: 35),
             neumCircleButton(

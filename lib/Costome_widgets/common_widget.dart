@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:halal_stocks/constance/constance.dart';
 
 const buttonColor = Color(0xff1D5BA9);
 const greenColor = Color(0xff2DB091);
+const greenButtonColor = Color(0xff00C564);
 const redColor = Color(0xffFF5252);
 const defaultRadius = 8.0;
 const defaultPadding = 20.0;
@@ -113,5 +115,105 @@ Widget neumorphicContainer({required BuildContext context, dynamic child}) {
           NeumorphicBoxShape.roundRect(BorderRadius.circular(defaultRadius)),
     ),
     child: child,
+  );
+}
+
+Widget cosstomListTile({
+  required BuildContext context,
+  required bool nothing,
+  required bool loser,
+  required bool sellOrBuy,
+}) {
+  return ListTile(
+    contentPadding: EdgeInsets.all(0),
+    leading: Container(
+      height: 40,
+      width: 50,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          image: DecorationImage(
+              fit: BoxFit.cover, image: AssetImage(ConstanceData.chevronIcon))),
+    ),
+    title: Text(
+      "Google",
+      style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 15),
+    ),
+    subtitle: Text("Google inc."),
+    trailing: SizedBox(
+      width: MediaQuery.of(context).size.width / 2.3,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              loser
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(sellOrBuy ? 'Buy' : "Sell",
+                            style: TextStyle(
+                                shadows: [defaultShadow],
+                                color:
+                                    sellOrBuy ? Color(0xffFAD303) : redColor)),
+                        SizedBox(height: 3),
+                        NeumorphicText(
+                          "On 01/01",
+                          style: NeumorphicStyle(
+                            depth: 2,
+                            color: Colors.white,
+                            lightSource: LightSource.topLeft,
+                            shadowLightColor: greenButtonColor.withOpacity(0.8),
+                            shadowDarkColor: greenButtonColor.withOpacity(0.8),
+                          ),
+                        ),
+                      ],
+                    )
+                  : nothing
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 60,
+                            ),
+                            NeumorphicIcon(
+                              Icons.lock,
+                              size: 25,
+                            ),
+                          ],
+                        )
+                      : SizedBox(),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Neumorphic(
+                  style: NeumorphicStyle(
+                    depth: -2,
+                    color: loser ? greenButtonColor : redColor,
+                    shape: NeumorphicShape.convex,
+                    shadowDarkColorEmboss: Colors.black87,
+                    shadowLightColorEmboss: Colors.white,
+                    lightSource: LightSource.top,
+                    boxShape: NeumorphicBoxShape.roundRect(
+                        BorderRadius.circular(defaultRadius)),
+                  ),
+                  child: Container(
+                    height: 30,
+                    width: 90,
+                    child: Center(
+                        child: Text(loser ? "+" + " 6.4%" : "-" + "6.4%",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1!
+                                .copyWith(fontSize: 14))),
+                  )),
+            ],
+          ),
+        ],
+      ),
+    ),
   );
 }
